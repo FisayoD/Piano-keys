@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Piano Kit</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+    <div class="keys">
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">Do</span>
+        </div>
+
+        <div data-key="82" class="key">
+            <kbd>R</kbd>
+            <span class="sound">Re</span>
+        </div>
+
+        <div data-key="77" class="key">
+            <kbd>M</kbd>
+            <span class="sound">Mi</span>
+        </div>
+
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">Fa</span>
+        </div>
+
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">So</span>
+        </div>
+
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">La</span>
+        </div>
+
+        <div data-key="84" class="key">
+            <kbd>T</kbd>
+            <span class="sound">Ti</span>
+        </div>
+
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">Do</span>
+        </div>
+    </div>
+    <audio data-key="68" src="sounds/20200724 152735 do.m4a"></audio>
+    <audio data-key="82" src="sounds/20200724 152759 r.m4a"></audio>
+    <audio data-key="77" src="sounds/20200724 152936 m.m4a"></audio>
+    <audio data-key="70" src="sounds/20200724 152953 f.m4a"></audio>
+    <audio data-key="83" src="sounds/20200724 153000 s.m4a"></audio>
+    <audio data-key="76" src="sounds/20200724 153006 l.m4a"></audio>
+    <audio data-key="84" src="sounds/20200724 153012 t.m4a"></audio>
+    <audio data-key="68" src="sounds/20200724 152735 d.m4a"></audio>
+<script>
+    function playSound(e) {
+        const audio = document.querySelector(`audio[data-key = "${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key = "${e.keyCode}"]`);
+        if(!audio) return; //  stop function from running
+        audio.currentTime = 0;
+        audio.play();
+        key.classList.add('playing');
+    }
+    function removeTransition(e) {
+        if(e.propertyName !== 'transform') return; //  skip if it's not a transform
+        this.classList.remove('playing');
+    }
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    window.addEventListener('keydown', playSound);
+</script>
+</body>
+</html>
